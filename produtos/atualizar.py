@@ -1,0 +1,19 @@
+import streamlit as st
+from st_pages import add_page_title
+from produtos.produto import Produto
+
+add_page_title()
+
+def interface_atualizar():
+    id = st.text_input("ID")
+    nome = st.text_input("Nome")
+    preco = st.text_input("Preço")
+    descricao = st.text_input("Descrição")
+    quantidade = st.text_input("Quantidade")
+    categoria = st.text_input("Categoria")
+
+    if st.button("Atualizar"):
+        Produto.atualizar_produto(id, nome, preco, descricao, quantidade, categoria)
+        st.success("Produto atualizado com sucesso!")
+
+interface_atualizar()
