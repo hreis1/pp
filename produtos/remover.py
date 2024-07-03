@@ -7,7 +7,11 @@ add_page_title()
 def interface_remover():
     id = st.text_input("ID")
     if st.button("Remover"):
-        Produto.remover_produto(id)
-        st.success("Produto removido com sucesso!")
+        produto = Produto.buscar(id)
+        if produto:
+            produto.remover()
+            st.success("Produto removido com sucesso")
+        else:
+            st.error("Produto não encontrado")
 
 interface_remover()

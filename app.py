@@ -11,10 +11,16 @@ show_pages(
             Page("produtos/adicionar.py", "Adicionar", "➕"),
             Page("produtos/atualizar.py", "Atualizar", "🔄"),
             Page("produtos/remover.py", "Remover", "❌"),
+        Section("Categorias", icon="🏷️"),
+            Page("categorias/listar.py", "Listar", "📋"),
+            Page("categorias/adicionar.py", "Adicionar", "➕"),
+            Page("categorias/remover.py", "Remover", "❌"),
+        Section("Vendas", icon="💰"),
+            Page("vendas/adicionar.py", "Vender", "💸"),
+            Page("vendas/listar.py", "Listar", "📋")
     ]
 )
 
-st.markdown('---')
 st.markdown('''
 # Sobre
 Aplicação web desenvolvida para Controle de Estoque de Supermercado
@@ -24,15 +30,23 @@ Aplicação web desenvolvida para Controle de Estoque de Supermercado
 - Adicionar produtos
 - Atualizar produtos
 - Remover produtos
+- Listar categorias
+- Adicionar categorias
+- Remover categorias se não estiver sendo usada
+- Vincular um produto a uma categoria
+- Vender um produto
+- Listar vendas
 
 ## Objetivo
-Supermercados precisam gerenciar seus estoques, controlando produtos, fornecedores e categorias
+Supermercados precisam gerenciar seus estoques, controlando produtos e categorias
 de produtos, além de registrar as vendas diárias.
 
 ## Tecnologias
 - Python
 - Streamlit
+- Sqlite3
 
 ## Desenvolvedor
 - [Paulo](https://github.com/hreis1)
+- [Pedro](https://github.com/pedro)
 ''')

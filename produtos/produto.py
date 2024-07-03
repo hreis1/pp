@@ -1,53 +1,89 @@
-import json
-import os
-
-json_file_path = 'produtos/produtos.json'
+import sqlite3
 
 class Produto:
-    def __init__(self, id, nome, preco, descricao, quantidade, categoria):
+    def __init__(self, id, nome, preco, descricao, quantidade, categoria_id):
         self.id = id
         self.nome = nome
         self.preco = preco
         self.descricao = descricao
         self.quantidade = quantidade
-        self.categoria = categoria
-    
-    def adicionar_produto(self):
-        produtos = Produto.carregar_produtos()
-        produtos.append({'id': self.id, 'nome': self.nome, 'preco': self.preco, 'descricao': self.descricao, 'quantidade': self.quantidade, 'categoria': self.categoria})
-        Produto.salvar_produtos(produtos)
+        self.categoria_id = categoria_id
 
-    def atualizar_produto(id, nome, preco, descricao, quantidade, categoria):
-        produtos = Produto.carregar_produtos()
-        for produto in produtos:
-            if produto['id'] == id:
-                produto['nome'] = nome
-                produto['preco'] = preco
-                produto['descricao'] = descricao
-                produto['quantidade'] = quantidade
-                produto['categoria'] = categoria
-                break
-        Produto.salvar_produtos(produtos)
+    def salvar(self):
+        conn = sqlite3.connect('./supermecado.db')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO produtos (nome, preco, descricao, quantidade, categoria_id) VALUES (?, ?, ?, ?, ?)',
+                        (self.nome, self.preco, self.descricao, self.quantidade, self.categoria_id))
+        conn.commit()
+        conn.close()
 
-    def remover_produto(id):
-        produtos = Produto.carregar_produtos()
-        produtos = [produto for produto in produtos if produto['id'] != id]
-        Produto.salvar_produtos(produtos)
+    @staticmethod
+    def listar():
+        conn = sqlite3.connect('./supermecado.db')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT produtos.*, categorias.nome AS categoria FROM produtos JOIN categorias ON produtos.categoria_id = categorias.id')
+        produtos_rows = cursor.fetchall()
+        conn.close()
+        produtos = []
+        for row in produtos_rows:
+            produto = {
+                "id": row["id"],
+                "nome": row["nome"],
+                "preco": row["preco"],
+                "descricao": row["descricao"],
+                "quantidade": row["quantidade"],
+                "categoria": row["categoria"]
+            }
+            produtos.append(produto)
+        return produtos
 
-    def carregar_produtos():
-        if os.path.exists(json_file_path):
-            with open(json_file_path, 'r') as file:
-                return json.load(file)
-        else:
-            return []
+    @staticmethod
+    def buscar(id):
+        conn = sqlite3.connect('./supermecado.db')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM produtos WHERE id = ?', (id,))
+        produto = cursor.fetchone()
+        conn.close()
+        return Produto(*produto) if produto else None
 
-    def buscar_produto(id):
-        produtos = Produto.carregar_produtos()
-        for produto in produtos:
-            if produto['id'] == id:
-                return produto
-        return None
+    @staticmethod
+    def busca_por_id_nome_categoria_descricao(input_buscar):
+        conn = sqlite3.connect('./supermecado.db')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        parametros = (input_buscar, f'%{input_buscar}%', f'%{input_buscar}%')
+        cursor.execute('SELECT produtos.*, categorias.nome AS categoria FROM produtos JOIN categorias ON produtos.categoria_id = categorias.id WHERE produtos.id = ? OR produtos.nome LIKE ? OR produtos.descricao LIKE ?', parametros)
+        produtos_rows = cursor.fetchall()
+        conn.close()
+        produtos = []
+        for row in produtos_rows:
+            produto = {
+                "id": row["id"],
+                "nome": row["nome"],
+                "preco": row["preco"],
+                "descricao": row["descricao"],
+                "quantidade": row["quantidade"],
+                "categoria": row["categoria"]
+            }
+            produtos.append(produto)
+        return produtos
 
-    def salvar_produtos(produtos):
-        with open(json_file_path, 'w') as file:
-            json.dump(produtos, file)
+    def atualizar(self):
+        conn = sqlite3.connect('./supermecado.db')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('UPDATE produtos SET nome = ?, preco = ?, descricao = ?, quantidade = ?, categoria_id = ?',
+                       (self.nome, self.preco, self.descricao, self.quantidade, self.categoria))
+        conn.commit()
+        conn.close()
+
+    def remover(self):
+        conn = sqlite3.connect('./supermecado.db')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM produtos WHERE id = ?', (self.id,))
+        conn.commit()
+        conn.close()
