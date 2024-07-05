@@ -48,5 +48,4 @@ de produtos, além de registrar as vendas diárias.
 
 ## Desenvolvedor
 - [Paulo](https://github.com/hreis1)
-- [Pedro](https://github.com/pedro)
 ''')

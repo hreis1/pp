@@ -12,23 +12,23 @@ CREATE TABLE IF NOT EXISTS Categorias (
 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS Produtos (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Nome TEXT NOT NULL,
-    Preco REAL NOT NULL,
-    Descricao TEXT,
-    Quantidade INTEGER NOT NULL,
-    Categoria_id INTEGER,
-    FOREIGN KEY (Categoria_id) REFERENCES Categorias(ID)
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    preco REAL NOT NULL,
+    descricao TEXT,
+    quantidade INTEGER NOT NULL,
+    categoria_id INTEGER,
+    FOREIGN KEY (categoria_id) REFERENCES Categorias(ID)
 )
 ''')
 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS Vendas (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Produto_id INTEGER,
-    Quantidade INTEGER NOT NULL,
-    Valor REAL NOT NULL,
-    Data TEXT NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    quantidade INTEGER NOT NULL,
+    valor REAL NOT NULL,
+    data TEXT NOT NULL,
+    produto_id INTEGER,
     FOREIGN KEY (Produto_id) REFERENCES Produtos(ID)
 )
 ''')
@@ -44,7 +44,7 @@ INSERT INTO Categorias (nome) VALUES
 ''')
 
 cursor.execute('''
-INSERT INTO Produtos (Nome, Preco, Descricao, Quantidade, Categoria_id) VALUES
+INSERT INTO Produtos (nome, preco, descricao, quantidade, categoria_id) VALUES
 ('Arroz', 10.0, 'Arroz branco', 100, 1),
 ('Feijão', 8.0, 'Feijão carioca', 100, 1),
 ('Macarrão', 5.0, 'Macarrão espaguete', 100, 1),

@@ -1,69 +1,56 @@
-### Tabela: Produtos
-- `ProdutoID` (PK): Identificador único do produto
-- `Nome` (VARCHAR): Nome do produto
-- `CategoriaID` (FK): Identificador da categoria do produto
-- `FornecedorID` (FK): Identificador do fornecedor do produto
-- `Preco` (DECIMAL): Preço do produto
-- `QuantidadeEstoque` (INT): Quantidade disponível em estoque
-
 ### Tabela: Categorias
-- `CategoriaID` (PK): Identificador único da categoria
-- `Nome` (VARCHAR): Nome da categoria
+- `id` (PK): Identificador único da categoria
+- `nome` (TEXT): Nome da categoria
+
+### Tabela: Produtos
+- `id` (PK): Identificador único do produto
+- `nome` (TEXT): Nome do produto
+- `preco` (REAL): Preço do produto
+- `descricao` (TEXT): Descrição do produto
+- `quantidade` (INTEGER): Quantidade em estoque
+- `categoria_id` (FK): Identificador da categoria do produto
 
 ### Tabela: Vendas
-- `VendaID` (PK): Identificador único da venda
-- `Data` (DATE): Data da venda
-- `Total` (DECIMAL): Valor total da venda
-
-### Tabela: ItensVenda
-- `ItemVendaID` (PK): Identificador único do item da venda
-- `VendaID` (FK): Identificador da venda
-- `ProdutoID` (FK): Identificador do produto vendido
-- `Quantidade` (INT): Quantidade vendida
-- `PrecoVenda` (DECIMAL): Preço do produto na venda
-
-### Diagrama ER (Entidade-Relacionamento)
-
-```plaintext
-Produtos
------------------------------------
-ProdutoID (PK)
-Nome
-CategoriaID (FK)
-FornecedorID (FK)
-Preco
-QuantidadeEstoque
-
-Fornecedores
------------------------------------
-FornecedorID (PK)
-Nome
-Endereco
-Telefone
-Email
-
-Categorias
------------------------------------
-CategoriaID (PK)
-Nome
-
-Vendas
------------------------------------
-VendaID (PK)
-Data
-Total
-
-ItensVenda
------------------------------------
-ItemVendaID (PK)
-VendaID (FK)
-ProdutoID (FK)
-Quantidade
-PrecoVenda
-```
+- `id` (PK): Identificador único da venda
+- `quantidade` (INTEGER): Quantidade vendida
+- `valor` (REAL): Valor total da venda
+- `data` (TEXT): Data da venda
+- `produto_id` (FK): Identificador do produto vendido
 
 ### Relacionamentos
-- Um produto pertence a uma categoria (`Produtos.CategoriaID` → `Categorias.CategoriaID`)
-- Um produto é fornecido por um fornecedor (`Produtos.FornecedorID` → `Fornecedores.FornecedorID`)
-- Uma venda pode ter vários itens de venda (`ItensVenda.VendaID` → `Vendas.VendaID`)
-- Cada item de venda é referente a um produto (`ItensVenda.ProdutoID` → `Produtos.ProdutoID`)
+
+- Um produto pertence a uma categoria
+- Um produto pode ser vendido várias vezes
+
+### Requisitos
+
+- python3
+- sqlite3
+- pip3
+- streamlit
+- stpages
+
+### Instalação
+
+```bash
+pip install sqlite3 streamlit stpages
+```
+
+### Execução
+
+Rodar o comando abaixo para iniciar o banco de dados
+```bash
+python3 init.py
+```
+
+Rodar o comando abaixo para iniciar a aplicação
+```bash
+streamlit run app.py
+```
+
+### Uso
+
+- Acesse o endereço `http://localhost:8501/` no seu navegador
+
+### Autor
+- [Paulo Henrique](https://github.com/hreis1)
