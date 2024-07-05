@@ -1,13 +1,13 @@
-Relatório do Trabalho - Sistema para supermercado
+## Relatório do Trabalho - Sistema para supermercado
 
-1. Objetivo
+### Objetivo
 
 O objetivo deste trabalho é aplicar os conceitos de programação orientada a
 objetos e banco de dados para criar um sistema de gerenciamento de estoque.
 Esse sistema deve ser capaz de armazenar e manipular informações sobre
 produtos, categorias e vendas, permitindo uma gestão eficiente e organizada do estoque da empresa.
 
-2. Desenvolvimento
+### Desenvolvimento
 
 Modelagem do Banco de Dados
 A modelagem do banco de dados foi realizada inicialmente para definir a estrutura do sistema
