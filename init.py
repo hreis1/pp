@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Produtos (
     descricao TEXT,
     quantidade INTEGER NOT NULL,
     categoria_id INTEGER,
-    FOREIGN KEY (categoria_id) REFERENCES Categorias(ID)
+    FOREIGN KEY (categoria_id) REFERENCES Categorias(id)
 )
 ''')
 
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Vendas (
     valor REAL NOT NULL,
     data TEXT NOT NULL,
     produto_id INTEGER,
-    FOREIGN KEY (Produto_id) REFERENCES Produtos(ID)
+    FOREIGN KEY (produto_id) REFERENCES Produtos(id)
 )
 ''')
 
