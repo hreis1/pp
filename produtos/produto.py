@@ -75,8 +75,8 @@ class Produto:
         conn = sqlite3.connect('./supermecado.db')
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
-        cursor.execute('UPDATE produtos SET nome = ?, preco = ?, descricao = ?, quantidade = ?, categoria_id = ?',
-                       (self.nome, self.preco, self.descricao, self.quantidade, self.categoria))
+        cursor.execute('UPDATE produtos SET nome = ?, preco = ?, descricao = ?, quantidade = ?, categoria_id = ? WHERE id = ?',
+                        (self.nome, self.preco, self.descricao, self.quantidade, self.categoria_id, self.id))
         conn.commit()
         conn.close()
 
